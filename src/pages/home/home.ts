@@ -15,4 +15,10 @@ export class HomePage {
 
   }
 
+  //faz a navegacao da home para pag categorias
+  //push é o empilhamento das paginas
+  login() {
+    this.navCtrl.setRoot('CategoriasPage');
+  }
+
 }
