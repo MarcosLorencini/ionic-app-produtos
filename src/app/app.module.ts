@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoriaService } from '../sevices/domain/categoria.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { AuthService } from '../sevices/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService,//tem um unico objeto servindo toda o app, instancia um servico só para toda o app, pq pode ser utilizado por mais de uma página
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    AuthService
   ]
 })
 export class AppModule {}
