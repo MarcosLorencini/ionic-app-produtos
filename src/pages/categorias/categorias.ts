@@ -33,8 +33,6 @@ export class CategoriasPage {
       //recebe as categorias do servico
      this.items = response;
     },
-    error => {
-      console.log(error);
-    });
+    error => {});
   }
 }
