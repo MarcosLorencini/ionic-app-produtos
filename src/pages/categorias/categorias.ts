@@ -33,6 +33,7 @@ export class CategoriasPage {
       //recebe as categorias do servico
      this.items = response;
     },
+    //recece a propagacao do erro do interceptor
     error => {});
   }
 }

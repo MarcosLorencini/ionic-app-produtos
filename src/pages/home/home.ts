@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { CredenciaisDTO } from '../../models/credenciais.dto';
 
 //decorator que informa para a aplicacao que esta classe é uma página,
 //podendo ref. entre aspas, em forma de string, para trabalhar no
@@ -11,6 +12,12 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  //fazer os bind deste objeto como os campos do login
+  creds : CredenciaisDTO = {
+    emai: "",
+    senha: ""
+  };
 
   constructor(public navCtrl: NavController, public menu:MenuController ) {
 
@@ -28,6 +35,10 @@ export class HomePage {
   //push é o empilhamento das paginas
   login() {
     this.navCtrl.setRoot('CategoriasPage');
+    
   }
+
+ 
+  
 
 }
