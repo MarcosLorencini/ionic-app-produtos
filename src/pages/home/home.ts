@@ -40,7 +40,8 @@ export class HomePage {
   login() {
     this.auth.authenticate(this.creds)
       .subscribe(response => {
-        console.log(response.headers.get('Authorization'))
+        //se a autenticacao ocorrer com sucesso
+        this.auth.successfulLogin(response.headers.get('Authorization'))
       //chama a pagina de categorias
       this.navCtrl.setRoot('CategoriasPage');
       },

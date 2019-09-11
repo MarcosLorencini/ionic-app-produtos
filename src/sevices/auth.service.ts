@@ -2,13 +2,15 @@ import { Injectable } from "@angular/core";
 import { CredenciaisDTO } from "../models/credenciais.dto";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
+import { LocalUser } from "../models/local_user";
+import { StorageService } from "./storage.service";
 
 
 @Injectable()
 export class AuthService {
     //enviar email e senha para o backend
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public storage: StorageService) {
 
     }
 
@@ -22,6 +24,22 @@ export class AuthService {
             responseType: 'text'
         })
 
+    }
+    //login realizado com sucesso
+    //receber como argumento o better token no cabeçalho da responsta
+    successfulLogin(authorizationValue: string) {
+        //tirar a palavra better, pega somente o token
+        let tok = authorizationValue.substring(7);
+        let user : LocalUser = {
+            token: tok
+        };
+        //armazenar o user no localStore
+        this.storage.setLocalUser(user);
+    }
+
+    //remover o usuario no localstorege
+    logout() {
+        this.storage.setLocalUser(null);
     }
 
 }
