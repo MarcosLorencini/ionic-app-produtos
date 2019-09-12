@@ -11,6 +11,7 @@ import { CategoriaService } from '../sevices/domain/categoria.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../sevices/auth.service';
 import { StorageService } from '../sevices/storage.service';
+import { ClienteService } from '../sevices/domain/cliente.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StorageService } from '../sevices/storage.service';
     CategoriaService,//tem um unico objeto servindo toda o app, instancia um servico só para toda o app, pq pode ser utilizado por mais de uma página
     ErrorInterceptorProvider,
     AuthService,
-    StorageService
+    StorageService,
+    ClienteService
 
   ]
 })
