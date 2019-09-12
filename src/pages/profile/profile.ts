@@ -33,7 +33,15 @@ export class ProfilePage {
           this.cliente = response;
           this.getImageIfExists();
         },
-        error => {});
+        error => {
+          if(error.status == 403){
+            //direciona para home
+            this.navCtrl.setRoot('HomePage');
+          }
+        });
+    } else {
+      //caso ocorra algum problema para pegar o localUser direceiona para a home
+      this.navCtrl.setRoot('HomePage');
     }
     
   }
