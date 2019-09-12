@@ -12,6 +12,7 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../sevices/auth.service';
 import { StorageService } from '../sevices/storage.service';
 import { ClienteService } from '../sevices/domain/cliente.service';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ClienteService } from '../sevices/domain/cliente.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService,//tem um unico objeto servindo toda o app, instancia um servico só para toda o app, pq pode ser utilizado por mais de uma página
+    AuthInterceptorProvider,//tem que ficar antes do ErrorInterceptorProvider
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
