@@ -61,6 +61,11 @@ export class HomePage {
     
   }
 
+  //navegar para a tela de signup
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
+
  
   
 
