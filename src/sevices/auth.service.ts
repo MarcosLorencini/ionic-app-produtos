@@ -29,6 +29,20 @@ export class AuthService {
         })
 
     }
+
+    //aproveitar o usuário logado na tela inicial
+    //o token é icluído automaticamente na requisição pelo interceptor
+    refreshToken() {
+        return this.http.post(`${API_CONFIG.baseUrl}/auth/refresh_token`, 
+         {},
+         {
+             //pegar o header da resposta
+             observe: 'response',
+             //retorna um texto não json, para o framework não dar erro de parse, achando que é json, tem que colocar o 'text' 
+             responseType: 'text'
+         })
+ 
+     }
     //login realizado com sucesso
     //receber como argumento o better token no cabeçalho da responsta
     successfulLogin(authorizationValue: string) {

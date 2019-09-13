@@ -35,6 +35,18 @@ export class HomePage {
     this.menu.swipeEnable(true);
    }
 
+   ionViewDidEnter() {
+    this.auth.refreshToken()
+    .subscribe(response => {
+      //se a autenticacao ocorrer com sucesso, armazena o token
+      this.auth.successfulLogin(response.headers.get('Authorization'))
+    //chama a pagina de categorias
+    this.navCtrl.setRoot('CategoriasPage');
+    },
+  error => {})
+
+   }
+
   //faz a navegacao da home para pag categorias
   //push é o empilhamento das paginas
   login() {
