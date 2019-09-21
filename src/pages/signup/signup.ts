@@ -5,6 +5,8 @@ import { EstadoService } from '../../sevices/domain/estado.service';
 import { CidadeService } from '../../sevices/domain/cidade.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
+import { ClienteService } from '../../sevices/domain/cliente.service';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 
 @IonicPage()
@@ -25,7 +27,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
 
       //vai instanciar o FormGroup
       this.formGroup = this.formBuilder.group({
@@ -73,7 +77,34 @@ export class SignupPage {
       })
   }
 
+  //e chamado no signup.html
   signupUser() {
+    //passa os objetos vindo do formulario e insere o cliente
+    this.clienteService.insert(this.formGroup.value)
+      .subscribe(response => {
+        this.showInsertOk();
+      },
+      erro => {});//vai ser tratado(global) no interceptorError
+  }
+  //vai mostrar um alert de sucesso
+  showInsertOk() {
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
+      enableBackdropDismiss: false, //tem que clicar no alert para ele sumir
+      buttons: [
+        {
+          text: 'Ok',
+          //desempilha a página
+          //o form foi empilhado na pag de login, no sucesso desempilha esta pagina
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    //apresenta o alert na tela
+    alert.present();
 
   }
 }

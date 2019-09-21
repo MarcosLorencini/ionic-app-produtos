@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
 import { StorageService } from '../sevices/storage.service';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { FieldMessage } from '../models/fieldmessage';
 
 //classe que intercepta os erros
 @Injectable()
@@ -34,6 +35,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                 case 403:
                 this.handle403();
+                break;
+                //erro de validacao vinda do backend resulta no codigo 422
+                case 422:
+                this.handle422(errorObj);
                 break;
 
                 default:
@@ -68,6 +73,24 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.storage.setLocalUser(null);
     }
 
+    handle422(errorObj) {
+        console.log(errorObj);
+        //abrir um alert com todos o erros do formulario
+        let alert = this.alertCtrl.create({
+            title: 'Erro 422: validação',
+            //lista de erro vinda da classe ValidationError do back
+            message: this.listErros(errorObj.errors),
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+
+            ]
+        });
+        alert.present();
+    }
+
     handleDefaultError(errorObj){
     //erro qualquer
     let alert = this.alertCtrl.create({
@@ -83,8 +106,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         ]
     });
     alert.present();
-
-
+    }
+    //recebe um alista de fildMessages(backend classe ValidationError) com o nome do campo e o respectio erro
+    private listErros(messages: FieldMessage[]) : string {
+        let s : string= '';
+        for(var i=0; i<messages.length; i++) {
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: "+ messages[i].message + '</p>';
+        }
+        return s;
     }
 }
 
