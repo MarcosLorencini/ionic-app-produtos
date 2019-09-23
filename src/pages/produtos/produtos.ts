@@ -44,9 +44,9 @@ export class ProdutosPage {
         error =>{});
     }
   }
-  //mostra os detalhes do produto
-  showDetail() {
-    this.navCtrl.push("ProdutoDetailPage");
+  //envia o id do produto para a pagina ProdutoDetailPage
+  showDetail(produto_id : string) {
+    this.navCtrl.push("ProdutoDetailPage", {prod_id: produto_id});
   }
 
 }
