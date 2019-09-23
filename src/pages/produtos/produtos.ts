@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../sevices/domain/produto.service';
+import { API_CONFIG } from '../../config/api.config';
 
 
 @IonicPage()
@@ -24,12 +25,24 @@ export class ProdutosPage {
     let categoria_id = this.navParams.get('categ_id');
     this.produtoService.findByCategoria(categoria_id)
       .subscribe(response => {
-        //retorna de um endpoint paginado(muitos valores) pegar somente do atributo "content" 
+        //retorna de um endpoint paginado(muitos produtos) pegar somente do atributo "content" 
         this.items = response['content'];
+        //chama após chegar os produtos
+        this.loadImageUrls();
       },
       error => {});
+  }
 
-   
+  //método para setar as URL's das imagens de miniatura dos produtos na variavel imageUrl
+  loadImageUrls() {
+    for(var i=0; i < this.items.length; i++) {
+      let item = this.items[i];
+      this.produtoService.getSmallImageFromBucket(item.id)
+        .subscribe(response => {
+          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+        },
+        error =>{});
+    }
   }
 
 }
