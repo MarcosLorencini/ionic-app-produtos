@@ -44,5 +44,9 @@ export class ProdutosPage {
         error =>{});
     }
   }
+  //mostra os detalhes do produto
+  showDetail() {
+    this.navCtrl.push("ProdutoDetailPage");
+  }
 
 }
