@@ -9,8 +9,9 @@
 </ion-header>
 <ion-content padding>
     <ion-list>
-      <!-- clicou em categoria aparece os produtos da categoria(bind de evento no click)-->
-      <button ion-item *ngFor="let item of items" (click)="showProdutos()">
+      <!-- clicou em categoria aparece os produtos da categoria(bind de evento no click)
+      passa o código da categoria-->
+      <button ion-item *ngFor="let item of items" (click)="showProdutos(item.id)">
         <ion-thumbnail item-start>
           <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
         </ion-thumbnail>

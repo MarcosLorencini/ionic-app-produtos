@@ -31,9 +31,10 @@ export class CategoriasPage {
     error => {});
   }
 
+  //navegacao passando parametro(codigo categoria) de uma pagina para outra(produtos.ts)
   //abre a página de produtos
-  showProdutos() {
-    this.navCtrl.push('ProdutosPage');
+  showProdutos(categoria_id : string) {
+    this.navCtrl.push('ProdutosPage', {categ_id: categoria_id});
 
   }
 }
