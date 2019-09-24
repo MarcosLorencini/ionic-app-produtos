@@ -10,11 +10,11 @@ import { StorageService } from "../storage.service";
 export class ClienteService {
      
     constructor(public http: HttpClient, public storage: StorageService) {}
-
-    findByEmail(email: string) : Observable<ClienteDTO> {   
+    //retorna todos os objetos do backend
+    findByEmail(email: string) {   
 
         //envia a requisicao como o token
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
     }
 
     //pegar a imagem do bucket amazon

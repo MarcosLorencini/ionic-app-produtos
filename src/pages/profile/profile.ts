@@ -30,7 +30,8 @@ export class ProfilePage {
       //buscar o cliente por email e imagem avatar
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response => {
-          this.cliente = response;
+          //informa ao compilador que esta resposta vai casar com o ClienteDTO(retorna o objeto completo do cliente)
+          this.cliente = response as ClienteDTO;
           this.getImageIfExists();
         },
         error => {
