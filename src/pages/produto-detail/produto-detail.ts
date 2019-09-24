@@ -4,7 +4,7 @@ import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../sevices/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
 import { CartService } from '../../sevices/domain/cart.service';
-import { race } from 'rxjs/operator/race';
+
 
 @IonicPage()
 @Component({
