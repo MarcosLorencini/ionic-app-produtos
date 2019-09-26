@@ -9,7 +9,7 @@
   </ion-header>
   
   <ion-content padding>
-  
+  <!-- mostra quando o pedido ainda nao foi confirmado -->
     <div *ngIf="!codpedido">
       <ion-card>
         <ion-card-header>
@@ -73,7 +73,7 @@
       <button ion-button block (click)="checkout()">Confirmar pedido</button>
       <button ion-button block outline (click)="back()">Voltar</button>
     </div>
-  
+  <!-- mostra quando o pedido foi confirmado -->
     <div *ngIf="codpedido">
       <ion-card>
           <ion-card-header>

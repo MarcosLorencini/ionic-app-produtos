@@ -20,7 +20,7 @@ export class OrderConfirmationPage {
   cartItems: CartItem[];
   cliente: ClienteDTO;
   endereco: EnderecoDTO;
-
+  codpedido: string;
 
   constructor(
     public navCtrl: NavController, 
@@ -58,6 +58,15 @@ export class OrderConfirmationPage {
   total() {
     this.cartService.total();
   }
+
+  //volta para o carrinho
+  back() {
+    this.navCtrl.setRoot('CartPage');
+  }
+
+  home() {
+    this.navCtrl.setRoot('CategoriasPage');
+  }
   
   //salva no banco de dados
   checkout() {
@@ -65,8 +74,8 @@ export class OrderConfirmationPage {
       .subscribe(response => {
         //limpa o carrinho apos gravar no banco
         this.cartService.createOrCleanCart();
-        //mostra a url do cadastro do pedido
-        console.log(response.headers.get('location'));
+        //pega do codigo do pedido da url do pedido salvo
+        this.codpedido = this.extractId(response.headers.get('location'));
       },
       error => {
         //problema de autorizacao ou autenticao
@@ -76,9 +85,11 @@ export class OrderConfirmationPage {
       });
    }
 
-   //volta para o carrinho
-   back() {
-     this.navCtrl.setRoot('CartPage');
+   //pega o código do pedido e mostra para o cliente
+   private extractId(location : string) : string {
+     let position = location.lastIndexOf('/');
+     return location.substring(position + 1, location.length);
    }
+   
 
 }
