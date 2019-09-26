@@ -49,8 +49,9 @@ export class PickAddressPage {
              //pegar o carrinho no storage e converter no formato json quantidade e produto
              //percorre a lista e pega os valores quantidade e id do produto do cart e joga em quantidade e id do produto de ItemPedidoDTO[]
              itens: cart.items.map(x => {return{quantidade: x.quantidade, produto: {id: x.produto.id}}})
+            
           }
-         
+               
         },
         error => {
           if(error.status == 403){

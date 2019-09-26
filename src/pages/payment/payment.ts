@@ -27,7 +27,6 @@ export class PaymentPage {
     //objeto pedido que vira como parametro na navegacao da pagina de endereco
     //pega o obj pedido que vem de outro pagina
     this.pedido = this.navParams.get('pedido');
-
     this.formGroup = this.formBuilder.group({
       numeroDeParcelas: [1, Validators.required], 
       //o nome pagamentoComCartao tem que igual ao nome que está no @JsonTypeName("pagamentoComCartao") na classe PagamentoComCartao no java
@@ -38,8 +37,8 @@ export class PaymentPage {
  nextPage() {
    //dados que foram preenchidos no html payment.html
    this.pedido.pagamento = this.formGroup.value;
-   console.log(this.pedido);
-
+   this.navCtrl.setRoot('OrderConfirmationPage', {pedido: this.pedido});
+   
  }
 
 }

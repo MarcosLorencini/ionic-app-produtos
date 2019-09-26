@@ -35,6 +35,12 @@ export class ClienteService {
             });
     }
 
+    //pega por o cliente por id para se sertificar que o cliente que está armazenado dentro do obj de pedido é o cliente logado
+    // e lá tem o id do cliente
+    findById(id: string) {   
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
+    }
+
 
 
 }

@@ -74,7 +74,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     handle422(errorObj) {
-        console.log(errorObj);
         //abrir um alert com todos o erros do formulario
         let alert = this.alertCtrl.create({
             title: 'Erro 422: validação',
