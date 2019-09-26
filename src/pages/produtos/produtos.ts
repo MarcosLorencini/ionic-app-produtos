@@ -24,6 +24,10 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData() {
     //pega o id da categoria vindo do categoria.ts
     let categoria_id = this.navParams.get('categ_id');
     //abre o loading
@@ -41,6 +45,7 @@ export class ProdutosPage {
         loader.dismiss();
       });
   }
+  
 
   //método para setar as URL's das imagens de miniatura dos produtos na variavel imageUrl
   loadImageUrls() {
@@ -64,6 +69,15 @@ export class ProdutosPage {
     });
     loader.present();
     return loader;
+  }
+  //comportante de loading quando puxa a tela para baixo
+  doRefresh(refresher) {
+    //realiza(atualiza) a requisao dos produtos
+    this.loadData();
+    //depois de 1 seg fecha o refresh
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
 }
