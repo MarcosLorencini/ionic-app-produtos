@@ -13,7 +13,9 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 })
 export class ProdutosPage {
 
-  items : ProdutoDTO[];
+  //inicia vazia, para concatenar a lista que já existia com a proxima lista que está sendo carregada
+  items : ProdutoDTO[] = [];
+  page : number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -32,14 +34,21 @@ export class ProdutosPage {
     let categoria_id = this.navParams.get('categ_id');
     //abre o loading
     let loader = this.presentLoading();
-    this.produtoService.findByCategoria(categoria_id)
+    this.produtoService.findByCategoria(categoria_id, this.page, 10)
       .subscribe(response => {
+        //pega o tamanho da lista antes de concatenar
+        let start = this.items.length;
         //retorna de um endpoint paginado(muitos produtos) pegar somente do atributo "content" 
-        this.items = response['content'];
+        //concateando com a lista que já existia
+        this.items = this.items.concat(response['content']);
+        //pega o tamanho da lista após concatenar
+        let end = this.items.length - 1;
         //fecha o loading
         loader.dismiss();
+        console.log(this.page);
+        console.log(this.items);
         //chama após chegar os produtos
-        this.loadImageUrls();
+        this.loadImageUrls(start, end);
       },
       error => {
         loader.dismiss();
@@ -48,8 +57,9 @@ export class ProdutosPage {
   
 
   //método para setar as URL's das imagens de miniatura dos produtos na variavel imageUrl
-  loadImageUrls() {
-    for(var i=0; i < this.items.length; i++) {
+  //start e end usado para não pegar a imagens novamente
+  loadImageUrls(start : number, end : number) {
+    for(var i=start; i < end; i++) {
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id)
         .subscribe(response => {
@@ -72,11 +82,23 @@ export class ProdutosPage {
   }
   //comportante de loading quando puxa a tela para baixo
   doRefresh(refresher) {
+    this.page = 0;
+    this.items = [];
     //realiza(atualiza) a requisao dos produtos
     this.loadData();
     //depois de 1 seg fecha o refresh
     setTimeout(() => {
       refresher.complete();
+    }, 1000);
+  }
+
+  doInfinite(infiniteScroll) {
+    //no final da pagina incrementa a pagina e chama novamente o loadData
+    this.page++;
+    this.loadData();
+    //excuta algo antes e desliga a animacao de carregando:
+    setTimeout(() => {
+      infiniteScroll.complete();
     }, 1000);
   }
 

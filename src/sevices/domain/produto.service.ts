@@ -19,8 +19,11 @@ export class ProdutoService {
 
     //obter os produtos de uma dada categoria
     //existe um endpoint no ProdutoResource no java que busca os produtos por categoria
-    findByCategoria(categoria_id : string) {
-        return this.http.get(`${API_CONFIG.baseUrl}/produtos/?categorias=${categoria_id}`)
+    //&page=${}&linesPerPage=${} comeca na pagina 0 e devolve quantidade de itens por pagina
+    //page comeca na pagina 0 por default
+    //linesPerPage por default é 24 por página
+    findByCategoria(categoria_id : string, page : number = 0, linesPerPage : number = 24) {
+        return this.http.get(`${API_CONFIG.baseUrl}/produtos/?categorias=${categoria_id}&page=${page}&linesPerPage=${linesPerPage}`)
     }
 
     //rebece o id do produto , carrega busca as imagens pequenas da relação de produtos dentro da categoria no aws
