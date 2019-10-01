@@ -15,4 +15,20 @@
 </ion-avatar>
 <h2 text-center>{{cliente?.nome}}</h2>
 <h2 text-center>{{cliente?.email}}</h2>
+
+<ion-card>
+    <ion-card-header>
+      Enviar imagem de perfil
+    </ion-card-header>
+     <!--só vai mostrar se o objeto picture estiver preenchido-->
+    <ion-item *ngIf="picture">
+      <img [src]="picture">
+    </ion-item>
+    <ion-item>
+       <!--botao vai ficar desabilitado quando a camera estiver ligada-->
+      <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>
+    </ion-item>
+  </ion-card>
+
+
 </ion-content>
