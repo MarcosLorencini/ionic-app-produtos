@@ -4,12 +4,16 @@ import { ClienteDTO } from "../../models/cliente.dto";
 import { API_CONFIG } from "../../config/api.config";
 import { Injectable } from "@angular/core";
 import { StorageService } from "../storage.service";
+import { ImageUtilService } from "../image-util.service";
 
 //Criar o serviço ClienteService com o método findByEmail
 @Injectable()
 export class ClienteService {
      
-    constructor(public http: HttpClient, public storage: StorageService) {}
+    constructor(
+        public http: HttpClient, 
+        public storage: StorageService,
+        public imageUtilService: ImageUtilService) {}
     //retorna todos os objetos do backend
     findByEmail(email: string) {   
 
@@ -41,6 +45,25 @@ export class ClienteService {
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
     }
 
+    //metodo que envia a foto o upload, recebe a imagem na forma de base64 e converte em blob
+    //para enviar para o S3
+    uploadPicture(picture) {
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
+        //enviar a foto como form-data é como está enviando no postman
+        let formData : FormData = new FormData();
+        //tipo file, a foto, nome do arquivo tudo igual ao postman para enviar a img
+        formData.set('file', pictureBlob, 'file.png');
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes/picture`,
+            formData,
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
+
+    }
+
+    
 
 
 }

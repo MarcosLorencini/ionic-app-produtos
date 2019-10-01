@@ -29,6 +29,12 @@ export class ProfilePage {
 
   //pegar o cliente no storage e buscar o cliente por email
   ionViewDidLoad() {
+   this.loadData();
+    
+  }
+
+  loadData() {
+
     let localUser = this.storage.getLocalUser();
     if(localUser && localUser.email) {
       //buscar o cliente por email e imagem avatar
@@ -48,7 +54,7 @@ export class ProfilePage {
       //caso ocorra algum problema para pegar o localUser direceiona para a home
       this.navCtrl.setRoot('HomePage');
     }
-    
+
   }
   //testa se a imagem existe
   getImageIfExists() {
@@ -82,6 +88,26 @@ export class ProfilePage {
 
   }
 
+  sendPicture() {
+    this.clienteService.uploadPicture(this.picture) 
+      .subscribe(response => {
+        //depois que enviou a imagem para o s3 colocar a picuture como null
+        this.picture = null;
+        //forca o carregamento dos dados
+        this.loadData();
+      },
+      error => {
+
+      })
+
+    }
+
+    cancel() {
+      this.picture = null;
+    }
+}
+
+
   
 
-}
+
